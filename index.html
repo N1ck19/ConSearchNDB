@@ -7,7 +7,7 @@
 			<title>ConSearch</title>
 			<style>
 
-				h1, h2 {
+				body {
 					text-align: center;
 				}
 
@@ -45,8 +45,31 @@
   					method: "GET"
   				}).done(function(response) {
   					// Printing the entire object to the console
-  					console.log(response);1
-  				})
+  					console.log(response);
+
+  					var artistName = $("<h1>").text(response.name);
+  					var artistURL = $("<a>").attr("href", response.url).append(artistName);
+  					var artistImage = $("<img>").attr("src", response.thumb_url);
+  					var trackerCount = $("<h2>").text(response.tracker_count + " fans tracking this artist");
+  					var upcomingEvents = $("<h2>".text(response.upcoming_event_count + " upcoming events");
+  					var goToArtist = $("<a>").attr("href", response.url).text("See Tour Dates");
+
+  					$("#artist-div").empty();
+  					$("#artist-div").append(artistURL, artistImage, trackerCount, upcomingEvents, goToArtist);
+  				});
   			}
+
+  			//Event handler for user clicking the select-artist button
+  			$("#select-artist").on("click", function(event) {
+
+  				//Preventing the button from trying to submit the form
+  				event.preventDefault();
+
+  				var artist = $("artist-input").val().trim();
+
+
+  				searchBandsInTown(artist);
+  			})
+
   		</script>
 	</html>
