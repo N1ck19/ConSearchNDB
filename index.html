@@ -4,58 +4,92 @@
 			<meta charset="UTF-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">
 			<title>ConSearch</title>
 			<style>
 
-				body {
-					text-align: center;
-				}
+			 body {
+          text-align: center;
+          background: url('assets/coolneon.jpg');
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+        h1, h2, a, label {
+          font-family: 'Roboto Condensed', sans-serif;
+          color: #fff;
+        }
+
+        a {
+          text-decoration: none;
+          transition: transform: 0.3s;
+        }
+
+        a:hover {
+          font-weight: bold;
+          transform: scale(1.2);
+        }
+
+        img {
+          border: 3px solid #eeeeee;
+          transition: transform 0.4s;
+        }
+
+        img:hover {
+          transform: scale(1.3);
+        }
 
 			</style>
 		</head>
 		<body>
 
 			<h1>ConSearch</h1>
-			<h2>Concert-Searching Tool</h2>
+      <h2>Concert-Searching Tool</h2>
 			<!--Artist select box-->
-			<form id="artists-form">
+			<form id="artist-form">
 				<!--Label for Text Box-->
 				<label for="artist-input">Choose Your Artist</label>
 
 				<!--Text Input Box-->
-				<input type="text" id="artist-input"><br>
+				<input type="text" id="artist-input"><br><br>
 
 				<!--Submit button-->
 				<input id="select-artist" type="submit" value="GO!">
+
 			</form>
 
 			<div id="artist-div"></div>
+
 		</body>
-		<script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
+
   		<script>
 
-  			function searchBandsInTown(artist) {
+  			function searchBandsInTown(artist) 
+        {
   				//Querying the bandsintown api for the selected artist, the ?app-id parameter is required, but can equal anything
-  				var queryURL = "https://rest.bandsintown.com/artists/" + artist + "?app_id=codingbootcamp";
+  				var queryURL = "https://rest.bandsintown.com/artists/" + artist +             "?app_id=codingbootcamp";
   				$.ajax({
+
   					url: queryURL,
   					method: "GET"
+
   				}).done(function(response) {
   					// Printing the entire object to the console
   					console.log(response);
 
   					var artistName = $("<h1>").text(response.name);
-  					var artistURL = $("<a>").attr("href", response.url).append(artistName);
+  					var artistUrl = $("<a>").attr("href", response.url).append(artistName);
   					var artistImage = $("<img>").attr("src", response.thumb_url);
-  					var trackerCount = $("<h2>").text(response.tracker_count + " fans tracking this artist");
-  					var upcomingEvents = $("<h2>".text(response.upcoming_event_count + " upcoming events");
+  					var trackerCount = $("<h2>").text(response.tracker_count +               " fans tracking this artist");
+  					var upcomingEvents = $("<h2>").text(response.upcoming_event_count +                   " upcoming events");
   					var goToArtist = $("<a>").attr("href", response.url).text("See Tour Dates");
 
   					$("#artist-div").empty();
-  					$("#artist-div").append(artistURL, artistImage, trackerCount, upcomingEvents, goToArtist);
+  					$("#artist-div").append(artistUrl, artistImage, trackerCount, upcomingEvents, goToArtist);
   				});
   			}
 
@@ -65,11 +99,13 @@
   				//Preventing the button from trying to submit the form
   				event.preventDefault();
 
-  				var artist = $("artist-input").val().trim();
+  				var artist = $("#artist-input").val().trim();
 
 
   				searchBandsInTown(artist);
-  			})
+  			});
 
   		</script>
 	</html>
+
+
